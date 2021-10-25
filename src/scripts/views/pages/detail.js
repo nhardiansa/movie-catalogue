@@ -1,3 +1,6 @@
+import TheMovieDBSource from '../../data/themoviedb-source';
+import UrlParser from '../../routes/url-parser';
+
 const Detail = {
   async render() {
     return `
@@ -5,8 +8,15 @@ const Detail = {
     `;
   },
 
-  // async afterRender() {
-  // }
+  async afterRender() {
+    try {
+      const url = UrlParser.parseActiveUrlWithoutCombiner();
+      const movies = await TheMovieDBSource.Detail(url.id);
+      console.log({ movies });
+    } catch (err) {
+      console.log({ err });
+    }
+  },
 };
 
 export default Detail;
